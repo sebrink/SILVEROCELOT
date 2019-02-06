@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "3.4"
+  - "3.5"
+
+
+services:
+  - docker
+
+before_install:
+  - sudo docker build -t my-apache2 .
+  - sudo docker run -dit --name test-test -p 8080:80 my-apache2
+
+script:
+  - pytest
+
