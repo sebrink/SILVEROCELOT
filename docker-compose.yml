@@ -1,0 +1,22 @@
+version: '2'
+services:
+  webserver:
+    build: ./webserver/.
+    links:
+     - database
+    ports:
+     - "80:80"
+    volumes:
+     - ./webserver/container_files:/var/www/html:z
+  database:
+    build: ./database/.
+    command: --init-file /mysql/setup.sql
+    environment:
+     - MYSQL_USER=user
+     - MYSQL_PASSWORD=password
+     - MYSQL_ROOT_PASSWORD=MEEP1234
+     - MYSQL_DATABASE=webdata
+    ports:
+     - "3360:3360"
+    volumes:
+     - ./database/container_files:/var/lib/mysql:z
