@@ -17,7 +17,8 @@ RUN service apache2 restart
 
 RUN echo "                       \n \
 <VirtualHost *:443>              \n \
-   ServerName localhost       \n \
+   ServerName localhost          \n \
+   ServerAlias 127.0.0.1         \n \
    DocumentRoot /var/www/html    \n \
    SSLEngine On                  \n \
    SSLCertificateFile /var/www/ca/server.crt \n \
@@ -33,6 +34,7 @@ RUN echo "                       \n \
 </Directory>                     \n \
 </VirtualHost>                   \n \
 <VirtualHost *:80>               \n \
+   ServerAlias 127.0.0.1         \n \
    ServerName localhost          \n \
    redirect permanent / https://localhost \n \ 
 </VirtualHost>                   \n \
