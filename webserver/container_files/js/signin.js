@@ -7,9 +7,9 @@ xhr.onreadystatechange = function () {
     if (this.status == 200) {
 	if(this.responseText.includes("Failed")){
 		alert('Incorrect username and password combination')
-		window.location.replace("/");
+		window.location.replace("/html/login.html");
 	}else{
-		alert('YAY you logged in!!');
+		window.location.replace("/python/index.py");
 	};
     };
 };

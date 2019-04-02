@@ -10,6 +10,7 @@ RUN apt-get -y install apache2
 RUN apt-get -y install python
 
 RUN apt-get -y install python-mysqldb
+RUN apt-get -y install python-jwt
 
 RUN a2enmod cgi
 RUN a2enmod ssl
@@ -26,7 +27,7 @@ RUN echo "                       \n \
 <Directory /var/www/html>        \n \
    Options +ExecCGI              \n \
    AddHandler cgi-script .py     \n \
-   DirectoryIndex html/login.html\n \
+   DirectoryIndex python/index.py\n \
 </Directory>                     \n \
 <Directory /var/www/html/python> \n \
    Options +ExecCGI 		 \n \
