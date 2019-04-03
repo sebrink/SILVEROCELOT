@@ -6,7 +6,9 @@ xhr.onreadystatechange = function () {
 	if(this.responseText.includes("invalid token")){
 		alert('Invalid Token')
 		window.location.replace("/html/login.html");
-	}
+	}else{
+            document.getElementById('videos').innerHTML = this.responseText;
+        }
     };
 };
 
@@ -18,7 +20,7 @@ try{
    if(token == null){
         window.location.replace("/html/login.html");
    }else{
-        xhr.open('GET', '/python/checkToken.py?token='+token, true);
+        xhr.open('GET', '/python/home.py', true);
         xhr.send(null);
    };
 

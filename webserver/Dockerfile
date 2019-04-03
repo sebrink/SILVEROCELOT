@@ -18,6 +18,9 @@ RUN service apache2 restart
 
 RUN echo "                       \n \
 <VirtualHost *:443>              \n \
+   AddType video/ogg .ogv        \n \
+   AddType video/mp4 .mp4        \n \
+   AddType video/webm .webm      \n \
    ServerName localhost          \n \
    ServerAlias 127.0.0.1         \n \
    DocumentRoot /var/www/html    \n \

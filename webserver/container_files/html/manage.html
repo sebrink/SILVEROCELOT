@@ -9,7 +9,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
     <script src="/js/home.js"></script>   
+
  <style>
 		html, body
 		{
@@ -20,17 +22,23 @@
   </head>
   <body><div class="row" style="">
     <div class="col-sm-4" style="top: 15px;"><h2 style="text-align: center; position: static; float: none; display: block;" contenteditable="true" spellcheckker="false">SILVEROCELOT</h2></div>
-    <div class="col-sm-4 col-5" style="top: 15px;"><h3><form style=""><input type="text" class="form-control" style="top: auto; position: static;" placeholder="Search..." id="search-bar"><div class="form-group"></div></form></h3></div>
-    <!-- Page Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          
-          
-        </div>
-      </div>
-    </div>
-  
+    <div class="col-sm-4 col-5" style="top: 15px;"><h3><form style=""><input placeholder="Search..." type="text" class="form-control" style="top: auto; position: static;" id="search-bar"><div class="form-group"></div></form></h3></div>
+    <div class="col-sm-4" style="top: 15px;"></div></div>
+    <div class="row" style="">
+    <div class="col-sm-4">
+<form id="uploadbanner" enctype="multipart/form-data" method="post" action="/python/upload.py">
+         <label for="filein">Upload a video:</label>
 
-<p style="line-height: 50px;" class="left text-center"></p><h4 style="left: 30px; position: absolute; float: none;">Videos:</h4></body>
+       <input type="text" id="videoname" placeholder="Name of video" name="videoname">
+       <input type="file" id="filein" name="filein" accept="*/*">
+       <input type="text" placeholder="or link to video" id="fileinlink" name="fileinlink">
+       <button id="uploadsubmit">Upload</button>
+</form>
+     </div>
+     <div class="col-sm-4"></div>
+     <div class="col-sm-4"></div>
+  
+<p></p><h4>Videos:</h4></body>
+    <script src="/js/upload.js"></script>
+    
 </html>
