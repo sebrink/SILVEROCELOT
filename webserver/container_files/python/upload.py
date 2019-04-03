@@ -54,19 +54,19 @@ else:
          # strip leading path from file name to avoid 
          # directory traversal attacks
          fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
-         open('/tmp/'+ decoded.get('username')+ '_' + fn, 'wb').write(fileitem.file.read())
+         open('/var/www/html/videos/'+ decoded.get('username')+ '_' + fn, 'wb').write(fileitem.file.read())
 
-         cursor.execute('insert into `Video Store` (`UID`, `Video Name`, `Video Location`) values ("{}", "{}", "{}")'.format(decoded.get('username'), videoname, '/tmp/'+decoded.get('username')+'_'+ fn))
+         cursor.execute('insert into `Video Store` (`UID`, `Video Name`, `Video Location`) values ("{}", "{}", "{}")'.format(decoded.get('username'), videoname, '/videos/'+decoded.get('username')+'_'+ fn))
          conn.commit()    
 
          message = 'The file "' + fn + '" was uploaded successfully'
    
       elif link:
          r = urllib.urlopen(link)
-         open('/tmp/'+decoded.get('username')+'_'+videoname,'wb').write(r.read())
+         open('/var/www/html/videos/'+decoded.get('username')+'_'+videoname,'wb').write(r.read())
          message = 'File downloaded'
 
-         cursor.execute('insert into `Video Store` (`UID`, `Video Name`, `Video Location`) values ("{}", "{}", "{}")'.format(decoded.get('username'), videoname, '/tmp/'+decoded.get('username')+'_'+ fn))
+         cursor.execute('insert into `Video Store` (`UID`, `Video Name`, `Video Location`) values ("{}", "{}", "{}")'.format(decoded.get('username'), videoname, '/videos/'+decoded.get('username')+'_'+ fn))
          conn.commit()    
 
       else:

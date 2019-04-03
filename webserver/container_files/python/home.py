@@ -48,11 +48,11 @@ else:
       cursor.execute('select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID`')
       rows = cursor.fetchall()
       for row in rows:
-         print("""<video width="320" height="240" controls>
+         print("""<video width="320" height="240" poster={} controls>
                   <source src="{}" type="video/mp4">
                   <source src="{}" type="video/webm">
                   Your browser does not support the video tag.
-                  </video></br>""".format(row[2], row[2]))
+                  </video></br>""".format(row[2], row[2], row[2]))
          print('User: {} Title: {}'.format(row[0],row[1]))
          print('</br>')
     
