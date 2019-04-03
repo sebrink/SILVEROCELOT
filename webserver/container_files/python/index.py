@@ -34,7 +34,7 @@ if session is None:
    print(' </head>')
    print(' <body>')
    print('  redirecto seato cuz. Hit the button if not automatically redirected...')
-   print('<form action="/html/login.php">')
+   print('<form action="/html/login.html">')
    print('<input type="submit" value="Redirect..." />')
    print('</form>')
    print(' </body>')
@@ -42,14 +42,18 @@ if session is None:
 else:
    try:
       decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
+      print('Location: /html/home.html')
       print('\r\n')	 
       print('<!doctype html>')
       print('<html lang=en>')
       print(' <head>')
-      print('  <title>You are logged in</title>')
+      print('  <title>Redirecting</title>')
       print(' </head>')
       print(' <body>')
-      print('Welcome back ' + decoded.get('username') + '!')
+      print('<form action="/html/login.html">')
+      print('<input type="submit" value="Redirect..." />')
+      print('</form>') 
+      #print('Welcome back ' + decoded.get('username') + '!')
       print(' </body>')
       print('</html>');
    except KeyError:
@@ -63,7 +67,7 @@ else:
       print(' </head>')
       print(' <body>')
       print('  redirecto seato cuz. Hit the button if not automatically redirected...')
-      print('<form action="/html/login.php">')
+      print('<form action="/html/login.html">')
       print('<input type="submit" value="Redirect..." />')
       print('</form>')
       print(' </body>')

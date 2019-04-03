@@ -9,6 +9,7 @@ xhr.onreadystatechange = function () {
 		alert('Incorrect username and password combination')
 		window.location.replace("/html/login.html");
 	}else{
+		document.cookie = this.responseText.replace(/(\r\n|\n|\r)/gm, "");
 		window.location.replace("/python/index.py");
 	};
     };

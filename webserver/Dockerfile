@@ -44,5 +44,6 @@ RUN echo "                       \n \
 RUN chmod -R u+rwx,g+x,o+x /var/www/html
 
 RUN ln -sf /usr/bin/python /usr/local/bin/python
-
+RUN ln -sf /dev/stdout /var/log/apache2/access.log
+RUN ln -sf /dev/stderr /var/log/apache2/error.log
 CMD /usr/sbin/apache2ctl -D FOREGROUND

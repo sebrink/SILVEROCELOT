@@ -7,7 +7,7 @@ from hashlib import sha256
 
 form = cgi.FieldStorage()
 
-print('Content-Type: text/html')
+print('Content-Type: text/html\r\n')
 
 conn = MySQLdb.connect(host="database", user="root", passwd="MEEP1234", db="webdata")
 cursor = conn.cursor()
@@ -29,6 +29,7 @@ else:
 		print('Failed')
 	else:
 		encoded_jwt = jwt.encode({'username': user}, 'secret', algorithm='HS256')
-		print('Set-Cookie: session=' + encoded_jwt + '; path=/;')
                 print('\r\n')
-		print(encoded_jwt)
+		print('session=' + encoded_jwt + '; path=/;')
+
+
