@@ -3,13 +3,12 @@ FROM ubuntu
 EXPOSE 80
 EXPOSE 443
 
-COPY ca /var/www/ca
-
 RUN apt-get update
 RUN apt-get -y install apache2
 RUN apt-get -y install python
 
 RUN apt-get -y install python-mysqldb
+RUN apt-get -y install ca-certificates
 RUN apt-get -y install python-jwt
 
 RUN a2enmod cgi
@@ -28,23 +27,30 @@ RUN echo "                       \n \
    SSLCertificateFile /var/www/ca/server.crt \n \
    SSLCertificateKeyFile /var/www/ca/server.key \n \
 <Directory /var/www/html>        \n \
-   Options +ExecCGI              \n \
+   Options +ExecCGI -Indexes     \n \
    AddHandler cgi-script .py     \n \
    DirectoryIndex python/index.py\n \
 </Directory>                     \n \
 <Directory /var/www/html/python> \n \
-   Options +ExecCGI 		 \n \
+   Options +ExecCGI -Indexes     \n \
    AddHandler cgi-script .py     \n \
 </Directory>                     \n \
 </VirtualHost>                   \n \
 <VirtualHost *:80>               \n \
+   Options -Indexes              \n \
    ServerAlias 127.0.0.1         \n \
    ServerName localhost          \n \
    redirect permanent / https://localhost \n \ 
 </VirtualHost>                   \n \
 " >> /etc/apache2/apache2.conf
 
+
+COPY ca /var/www/ca
+COPY webapp/ /var/www/html/
+
 RUN chmod -R u+rwx,g+x,o+x /var/www/html
+RUN chgrp -R www-data /var/www/html/videos
+RUN chmod -R g+rwx /var/www/html/videos
 
 RUN ln -sf /usr/bin/python /usr/local/bin/python
 RUN ln -sf /dev/stdout /var/log/apache2/access.log

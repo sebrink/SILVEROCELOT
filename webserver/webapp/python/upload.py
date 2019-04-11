@@ -7,6 +7,7 @@ import jwt
 import Cookie
 import urllib
 from os import environ
+from datetime import datetime, timedelta
 import json
 
 print('Content-type: text/html\r\n')
@@ -46,9 +47,19 @@ if session is None:
    print('invlaid token')
 else:
    try:
-      decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
       print('\r\n')	 
 
+      decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
+      cursor.execute('select * from `User Store` where `User Store`.`UID` = {}'.format(decoded.get('username')))
+      ret = cursor.fetchall()
+
+      if len(ret) == 0:
+         print('invlaid token')
+         exit()
+      if datetime.now() > datetime.strptime(decoded.get('expireDate'), '%Y-%m-%dT%H:%M:%S.%f'):
+         print('invlaid token')
+         exit()
+	  
       print(fileitem.filename)
       if fileitem.filename:
          # strip leading path from file name to avoid 

@@ -8,7 +8,7 @@ services:
      - 80:80
      - 443:443
     volumes:
-     - ./webserver/container_files:/var/www/html:z
+     - ./webserver/container_files:/var/www/html/videos:Z
   database:
     build: ./database/.
     command: --init-file /mysql/setup.sql
@@ -20,4 +20,4 @@ services:
     ports:
      - "3360:3360"
     volumes:
-     - ./database/container_files:/var/lib/mysql:z
+     - ./database/container_files:/var/lib/mysql:Z

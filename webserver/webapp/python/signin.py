@@ -4,6 +4,7 @@ import cgi
 import MySQLdb
 import jwt
 from hashlib import sha256
+from datetime import datetime, timedelta
 
 form = cgi.FieldStorage()
 
@@ -25,11 +26,12 @@ else:
 	user = ret[0][0]
 	passwd = ret[0][1]
 	if passwd != password or user != username:
-                print('\r\n')
+        	print('\r\n')
 		print('Failed')
 	else:
-		encoded_jwt = jwt.encode({'username': user}, 'secret', algorithm='HS256')
-                print('\r\n')
+       		expires = (datetime.now() + timedelta(days=1)).isoformat()
+        	encoded_jwt = jwt.encode({'username': user, 'expireDate': expires}, 'secret', algorithm='HS256')
+        	print('\r\n')
 		print('session=' + encoded_jwt + '; path=/;')
 
 
