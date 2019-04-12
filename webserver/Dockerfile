@@ -13,9 +13,19 @@ RUN apt-get -y install python-jwt
 
 RUN a2enmod cgi
 RUN a2enmod ssl
+RUN a2dismod -f autoindex
 RUN service apache2 restart
+RUN rm -rf /var/www/html/* 
 
 RUN echo "                       \n \
+<VirtualHost *:80>               \n \
+   ServerAlias 127.0.0.1         \n \
+   ServerName localhost          \n \
+   redirect permanent / https://localhost \n \ 
+<Directory /var/www/html/>       \n \
+   Options -Indexes              \n \
+</Directory>                     \n \
+</VirtualHost>                   \n \
 <VirtualHost *:443>              \n \
    AddType video/ogg .ogv        \n \
    AddType video/mp4 .mp4        \n \
@@ -35,12 +45,6 @@ RUN echo "                       \n \
    Options +ExecCGI -Indexes     \n \
    AddHandler cgi-script .py     \n \
 </Directory>                     \n \
-</VirtualHost>                   \n \
-<VirtualHost *:80>               \n \
-   Options -Indexes              \n \
-   ServerAlias 127.0.0.1         \n \
-   ServerName localhost          \n \
-   redirect permanent / https://localhost \n \ 
 </VirtualHost>                   \n \
 " >> /etc/apache2/apache2.conf
 
