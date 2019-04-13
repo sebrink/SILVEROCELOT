@@ -25,12 +25,12 @@ print('Content-Type: text/html')
 
 if session is None:
    print('\r\n')
-   print('invlaid token')
+   print('invalid token')
 else:
    try:
       decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
-      print('\r\n')	 
+      print('\r\n')
       print(decoded)
    except KeyError:
       print('\r\n')
-      print('invalid token')   
+      print('invalid token')

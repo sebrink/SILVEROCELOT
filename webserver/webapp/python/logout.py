@@ -18,7 +18,6 @@ cursor = conn.cursor()
 form = cgi.FieldStorage()
 
 token = None
-
 session = None
 
 if 'HTTP_COOKIE' in os.environ:
@@ -50,17 +49,10 @@ else:
          print('invalid token')
          exit()
 
-
-      cursor.execute('select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID`')
-      rows = cursor.fetchall()
-      for row in rows:
-         print("""<video width="320" height="240" poster={} controls>
-                  <source src="{}" type="video/mp4">
-                  <source src="{}" type="video/webm">
-                  Your browser does not support the video tag.
-                  </video></br>""".format(row[2], row[2], row[2]))
-         print('User: {} Title: {}'.format(row[0],row[1]))
-         print('</br>')
+      expires = (datetime.datetime(1970,1,1).isoformat())
+      encoded_jwt = jwt.encode({'username': decoded.get('username'), 'expireDate': expires}, 'secret', algorithm='HS256')
+      print('\r\n')
+      print('session=' + encoded_jwt + '; path=/;')
 
    except KeyError:
       print('\r\n')

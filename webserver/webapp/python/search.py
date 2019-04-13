@@ -19,13 +19,6 @@ form = cgi.FieldStorage()
 
 token = None
 
-if environ.has_key('HTTP_COOKIE'):
-   for cookie in os.environ['HTTP_COOKIE'].split('; '):
-      (key, value ) = cookie.split('=');
-      if key == "session":
-         token = value
-
-
 session = None
 
 if 'HTTP_COOKIE' in os.environ:
@@ -40,27 +33,27 @@ if 'HTTP_COOKIE' in os.environ:
 
 if session is None:
    print('\r\n')
-   print('invlaid token')
+   print('invalid token')
 else:
    try:
-      print('\r\n')	 
+      print('\r\n')
 
       decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
-      cursor.execute('select * from `User Store` where `User Store`.`UID` = {}'.format(decoded.get('username')))
+      cursor.execute('select * from `User Store` where `User Store`.`UID` = "{}"'.format(decoded.get('username')))
       ret = cursor.fetchall()
 
       if len(ret) == 0:
-         print('invlaid token')
+         print('invalid token')
          exit()
 
       if datetime.now() > datetime.strptime(decoded.get('expireDate'), '%Y-%m-%dT%H:%M:%S.%f'):
-         print('invlaid token')
+         print('invalid token')
          exit()
 
 
       cursor.execute('select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID` and `Video Store`.`Video Name` = "{}"'.format(form['search'].value))
       rows = cursor.fetchall()
-      
+
       if len(rows) == 0:
          print('Sorry there were no results for "{}"'.format(form['search'].value))
       else:
@@ -73,7 +66,7 @@ else:
                   </video></br>""".format(row[2], row[2], row[2]))
              print('User: {} Title: {}'.format(row[0],row[1]))
              print('</br>')
-    
+
    except KeyError:
       print('\r\n')
-      print('invalid token') 
+      print('invalid token')

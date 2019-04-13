@@ -10,7 +10,7 @@
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
-    <script src="/js/home.js"></script>   
+    <script src="/js/home.js"></script>
 
     <style>
 		html, body
@@ -23,7 +23,7 @@
   <body><div class="row" style="">
     <div class="col-sm-4" style="top: 15px;"><h2 style="text-align: center; position: static; float: none; display: block;" contenteditable="true" spellcheckker="false">SILVEROCELOT</h2></div>
     <div class="col-sm-4 col-5" style="top: 15px;"><h3><form style="" action="/python/search.py" method="get"><input name="search" placeholder="Search..." type="text" class="form-control" style="top: auto; position: static;" id="search-bar"><div class="form-group"></div></form></h3></div>
-    <div class="col-sm-4" style="top: 15px;"></div></div>
+    <div class="col-sm-4" style="top: 15px;"><button id="logout">Logout</button></div></div>
     <form id="uploadbanner" enctype="multipart/form-data" method="post" action="/python/upload.py">
            <label for="filein">Upload a video:</label>
            <input type="text" id="videoname" placeholder="Name of video" name="videoname">
@@ -38,5 +38,6 @@
 </body>
     <script src="/js/upload.js"></script>
     <script src="/js/manage.js"></script>
-    
+    <script src="/js/logout.js"></script>
+
 </html>

@@ -33,5 +33,3 @@ else:
         	encoded_jwt = jwt.encode({'username': user, 'expireDate': expires}, 'secret', algorithm='HS256')
         	print('\r\n')
 		print('session=' + encoded_jwt + '; path=/;')
-
-

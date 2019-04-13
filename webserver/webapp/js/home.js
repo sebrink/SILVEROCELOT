@@ -4,8 +4,8 @@ xhr.onreadystatechange = function () {
     if (this.readyState != 4) return;
     if (this.status == 200) {
 	if(this.responseText.includes("invalid token")){
-		alert('Invalid Token')
 		window.location.replace("/html/login.html");
+    document.cookie = "session=; max-age=-9999; path=/;";
 	}else{
             document.getElementById('videos').innerHTML = this.responseText;
         }
@@ -28,4 +28,3 @@ try{
 catch(err){
    window.location.replace("/html/login.html");
 }
-

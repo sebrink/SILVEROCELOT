@@ -46,13 +46,13 @@ if session is None:
 else:
    try:
       decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
-      cursor.execute('select * from `User Store` where `User Store`.`UID` = {}'.format(decoded.get('username')))
+      cursor.execute('select * from `User Store` where `User Store`.`UID` = "{}"'.format(decoded.get('username')))
       ret = cursor.fetchall()
 
       if len(ret) == 0:
          print('Status: 302 Found')
          print('Location: /html/login.html')
-         print('\r\n')	 
+         print('\r\n')
          exit()
 
       if datetime.now() > datetime.strptime(decoded.get('expireDate'), '%Y-%m-%dT%H:%M:%S.%f'):
@@ -60,9 +60,9 @@ else:
          print('Location: /html/login.html')
          print('\r\n')
          exit()
-		 
+
       print('Location: /html/home.html')
-      print('\r\n')	 
+      print('\r\n')
       print('<!doctype html>')
       print('<html lang=en>')
       print(' <head>')
@@ -71,7 +71,7 @@ else:
       print(' <body>')
       print('<form action="/html/login.html">')
       print('<input type="submit" value="Redirect..." />')
-      print('</form>') 
+      print('</form>')
       #print('Welcome back ' + decoded.get('username') + '!')
       print(' </body>')
       print('</html>');
@@ -91,4 +91,3 @@ else:
       print('</form>')
       print(' </body>')
       print('</html>');
-   

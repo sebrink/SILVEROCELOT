@@ -20,13 +20,6 @@ form = cgi.FieldStorage()
 
 token = None
 
-if environ.has_key('HTTP_COOKIE'):
-   for cookie in os.environ['HTTP_COOKIE'].split('; '):
-      (key, value ) = cookie.split('=');
-      if key == "session":
-         token = value
-
-
 session = None
 
 if 'HTTP_COOKIE' in os.environ:
@@ -41,32 +34,32 @@ if 'HTTP_COOKIE' in os.environ:
 
 if session is None:
    print('\r\n')
-   print('invlaid token')
+   print('invalid token')
 else:
    try:
-      print('\r\n')	 
+      print('\r\n')
 
       decoded = jwt.decode(session, 'secret', algorithms=['HS256'])
-      cursor.execute('select * from `User Store` where `User Store`.`UID` = {}'.format(decoded.get('username')))
+      cursor.execute('select * from `User Store` where `User Store`.`UID` = "{}"'.format(decoded.get('username')))
       ret = cursor.fetchall()
 
       if len(ret) == 0:
-         print('invlaid token')
+         print('invalid token')
          exit()
 
       if datetime.now() > datetime.strptime(decoded.get('expireDate'), '%Y-%m-%dT%H:%M:%S.%f'):
-         print('invlaid token')
+         print('invalid token')
          exit()
 
       cursor.execute('select `Video Location` from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
       rows = cursor.fetchall()
-      
+
       subprocess.Popen('rm /var/www/html{}'.format(rows[0][0]), shell=True)
 
       cursor.execute('delete from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
-      
+
       conn.commit()
       print('<meta http-equiv="refresh" content="1; URL=\'/html/manage.html\'" />')
    except KeyError:
       print('\r\n')
-      print('invalid token') 
+      print('invalid token')
