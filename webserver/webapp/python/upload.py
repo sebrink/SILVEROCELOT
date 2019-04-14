@@ -53,7 +53,6 @@ else:
          print('invalid token')
          exit()
 
-      print(fileitem.filename)
       if fileitem.filename:
          fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
          open('/var/www/html/videos/'+ decoded.get('username')+ '_' + videoname, 'wb').write(fileitem.file.read())

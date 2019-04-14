@@ -15,13 +15,13 @@ RUN a2enmod cgi
 RUN a2enmod ssl
 RUN a2dismod -f autoindex
 RUN service apache2 restart
-RUN rm -rf /var/www/html/* 
+RUN rm -rf /var/www/html/*
 
 RUN echo "                       \n \
 <VirtualHost *:80>               \n \
    ServerAlias 127.0.0.1         \n \
    ServerName localhost          \n \
-   redirect permanent / https://localhost \n \ 
+   redirect permanent / https://localhost \n \
 <Directory /var/www/html/>       \n \
    Options -Indexes              \n \
 </Directory>                     \n \
@@ -51,6 +51,7 @@ RUN echo "                       \n \
 
 COPY ca /var/www/ca
 COPY webapp/ /var/www/html/
+RUN mkdir -p /var/www/html/videos
 
 RUN chmod -R u+rwx,g+x,o+x /var/www/html
 RUN chgrp -R www-data /var/www/html/videos
