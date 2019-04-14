@@ -51,7 +51,6 @@ else:
          exit()
       param = form['search'].value
       query = 'select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID` and `Video Store`.`Video Name` = \"'+param+'\"'
-      print query
       cursor.execute(query)
       rows = cursor.fetchall()
 
