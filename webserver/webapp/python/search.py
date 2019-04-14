@@ -49,9 +49,10 @@ else:
       if datetime.now() > datetime.strptime(decoded.get('expireDate'), '%Y-%m-%dT%H:%M:%S.%f'):
          print('invalid token')
          exit()
-
-
-      cursor.execute('select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID` and `Video Store`.`Video Name` = "{}"'.format(form['search'].value))
+      param = form['search'].value
+      query = 'select `Display Name`,`Video Name`, `Video Location` from `Video Store` join `User Store` where `User Store`.`UID` = `Video Store`.`UID` and `Video Store`.`Video Name` = \"'+param+'\"'
+      print query
+      cursor.execute(query)
       rows = cursor.fetchall()
 
       if len(rows) == 0:
