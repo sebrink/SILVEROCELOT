@@ -9,8 +9,6 @@ services:
 before_install:
   - pip install requests
   - sudo docker-compose build
-  - mkdir webserver/container_files
-  - chown 33:33 webserver/container_files
   - sudo docker-compose up -d
   - sleep 60
 
