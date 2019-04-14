@@ -49,7 +49,7 @@ else:
          print('invalid token')
          exit()
 
-      expires = (datetime.datetime(1970,1,1).isoformat())
+      expires = (datetime.strptime('1970-1-1T12:34:56.100000','%Y-%m-%dT%H:%M:%S.%f').isoformat())
       encoded_jwt = jwt.encode({'username': decoded.get('username'), 'expireDate': expires}, 'secret', algorithm='HS256')
       print('\r\n')
       print('session=' + encoded_jwt + '; path=/;')

@@ -53,12 +53,14 @@ else:
 
       cursor.execute('select `Video Location` from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
       rows = cursor.fetchall()
+      try:
+         subprocess.Popen('rm /var/www/html{}'.format(rows[0][0]), shell=True)
 
-      subprocess.Popen('rm /var/www/html{}'.format(rows[0][0]), shell=True)
+         cursor.execute('delete from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
+         conn.commit()
+      except Exception:
+         pass
 
-      cursor.execute('delete from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
-
-      conn.commit()
       print('<meta http-equiv="refresh" content="1; URL=\'/html/manage.html\'" />')
    except KeyError:
       print('\r\n')
