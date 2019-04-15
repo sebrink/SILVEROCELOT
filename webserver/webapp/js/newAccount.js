@@ -8,8 +8,10 @@ xhr.onreadystatechange = function () {
 	if(this.responseText.includes("User Created")){
 		alert('Account Created! Please now log into your account')
 		window.location.replace("/");
-	}else{
+	}else if(this.responseText.includes("Already Exists")){
 		alert('Username already taken');
+	}else if(this.responseText.includes("Recaptcha Failed")){
+		alert('Invalid captcha');
 	};
     };
 };
@@ -19,6 +21,7 @@ var username = document.getElementById("username").value;
 var password = document.getElementById("password").value;
 var confirmPassword = document.getElementById("confirmPassword").value;
 var displayName = document.getElementById("displayName").value;
+var recap = grecaptcha.getResponse();
 
 if(username == ""){
 	alert('Enter a username');
@@ -29,7 +32,7 @@ if(username == ""){
 }else if(password == ""){
 	alert('You need a password');
 }else{
-	xhr.open('GET', '/python/newAccount.py?username='+username+'&displayName='+displayName+'&password='+password, true);
+	xhr.open('GET', '/python/newAccount.py?username='+username+'&displayName='+displayName+'&password='+password+'&recap='+recap, true);
 	xhr.send(null);
 }
 };

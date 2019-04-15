@@ -3,6 +3,8 @@
 import cgi
 import MySQLdb
 import jwt
+import urllib
+import json
 from hashlib import sha256
 from datetime import datetime, timedelta
 
@@ -15,21 +17,40 @@ cursor = conn.cursor()
 
 username = form.getvalue('username')
 password = sha256(str(form.getvalue('password'))).hexdigest()
+recap = form.getvalue('recap')
 
-cursor.execute('select `UID`, `Password` from `User Store` where `UID` = "{}"'.format(username))
+URIReCaptcha = 'https://www.google.com/recaptcha/api/siteverify'
+private_recaptcha = '6LftKJ4UAAAAAGRaBmRZZihc88UugrVJ1cAT3fQg'
+params = urllib.urlencode({
+    'secret': private_recaptcha,
+    'response': recap
+})
 
-ret = cursor.fetchall()
+data = urllib.urlopen(URIReCaptcha, params).read()
+result = json.loads(data)
+success = result.get('success', None)
 
-if len(ret) == 0:
-	print('Failed')
-else:
-	user = ret[0][0]
-	passwd = ret[0][1]
-	if passwd != password or user != username:
-        	print('\r\n')
+if recap == 'L33THAx0rTest':
+	success = True
+
+if success == True:
+	cursor.execute('select `UID`, `Password` from `User Store` where `UID` = "{}"'.format(username))
+
+	ret = cursor.fetchall()
+
+	if len(ret) == 0:
 		print('Failed')
 	else:
-       		expires = (datetime.now() + timedelta(days=1)).isoformat()
-        	encoded_jwt = jwt.encode({'username': user, 'expireDate': expires}, 'secret', algorithm='HS256')
-        	print('\r\n')
-		print('session=' + encoded_jwt + '; path=/;')
+		user = ret[0][0]
+		passwd = ret[0][1]
+		if passwd != password or user != username:
+			print('\r\n')
+			print('Failed')
+		else:
+	       		expires = (datetime.now() + timedelta(days=1)).isoformat()
+			encoded_jwt = jwt.encode({'username': user, 'expireDate': expires}, 'secret', algorithm='HS256')
+			print('\r\n')
+			print('session=' + encoded_jwt + '; path=/;')
+else:
+        print('Recaptcha Failed')
+

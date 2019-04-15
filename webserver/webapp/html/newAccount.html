@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>SILVEROCELOT</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -25,10 +26,13 @@
 	  <li class="list-group-item"><form style=""><div class="form-group"><label>Display Name</label><input id="displayName" type="text" class="form-control"></div></form></li>
 	  <li class="list-group-item"><form style=""><div class="form-group">Password<input id="password" type="password" class="form-control"></div></form></li>
 	  <li class="list-group-item"><form style=""><div class="form-group">Confirm Password<input id="confirmPassword" type="password" class="form-control"></div></form></li>
-	  <li class="list-group-item">
+          <li class="list-group-item">
 		<div class="row" style="">
 			<div class="col-sm-4"><h3></h3></div>
 			<div class="col-sm-4 col-5"><h3>
+                                <br>
+                                <div class="g-recaptcha" data-sitekey="6LftKJ4UAAAAAFSR0Yra7xIpRM5tIKA6cUUlt644"></div>
+                                <br>
 				<button id="createAccount" type="button" class="btn btn-primary" style="width: 100%;" contenteditable="true" spellchecker="false">Create Account</button></h3>
 			</div>
 			<div class="col-sm-4"><h3></h3></div>

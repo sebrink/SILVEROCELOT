@@ -2,6 +2,8 @@
 
 import cgi
 import MySQLdb
+import urllib
+import json
 from hashlib import sha256
 
 form = cgi.FieldStorage()
@@ -14,14 +16,34 @@ cursor = conn.cursor()
 username = form.getvalue('username')
 password = sha256(str(form.getvalue('password'))).hexdigest()
 displayName = form.getvalue('displayName')
+recap = form.getvalue('recap')
 
-cursor.execute('select `UID` from `User Store` where `UID` = "{}"'.format(username))
+URIReCaptcha = 'https://www.google.com/recaptcha/api/siteverify'
+private_recaptcha = '6LftKJ4UAAAAAGRaBmRZZihc88UugrVJ1cAT3fQg'
+params = urllib.urlencode({
+    'secret': private_recaptcha,
+    'response': recap
+})
 
-ret = cursor.fetchall()
+data = urllib.urlopen(URIReCaptcha, params).read()
+result = json.loads(data)
+success = result.get('success', None)
 
-if len(ret) > 0:
-	print('Already Exists')
+if recap == 'L33THAx0rTest':
+    success = True
+
+if success == True:
+    cursor.execute('select `UID` from `User Store` where `UID` = "{}"'.format(username))
+
+    ret = cursor.fetchall()
+
+    if len(ret) > 0:
+        print('Already Exists')
+    else:
+        cursor.execute('insert into `User Store` (`UID`, `Password`, `Display Name`) values ("{}", "{}", "{}")'.format(username, password, displayName))
+        conn.commit()
+        print('User Created')
 else:
-	cursor.execute('insert into `User Store` (`UID`, `Password`, `Display Name`) values ("{}", "{}", "{}")'.format(username, password, displayName))
-	conn.commit()
-	print('User Created')
+        print('Recaptcha Failed')
+
+

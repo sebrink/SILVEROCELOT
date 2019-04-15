@@ -1,7 +1,7 @@
 import requests
 
 def test_1_sql_injection():
-    params = {'username':'new', 'password':'new'}
+    params = {'username':'new', 'password':'new', 'recap':'L33THAx0rTest'}
     page = requests.get('https://localhost/python/signin.py', params=params, verify=False)
     page.encoding = 'utf-8'
     cookiename = page.text.strip().split(';')[0].split('=')[0]
@@ -13,7 +13,7 @@ def test_1_sql_injection():
 
 
 def test_2_blind_sql_injection():
-    params = {'username':'new', 'password':'new'}
+    params = {'username':'new', 'password':'new', 'recap':'L33THAx0rTest'}
     page = requests.get('https://localhost/python/signin.py', params=params, verify=False)
     page.encoding = 'utf-8'
     cookiename = page.text.strip().split(';')[0].split('=')[0]
