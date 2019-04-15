@@ -51,8 +51,6 @@ else:
          print('invalid token')
          exit()
 
-      cursor.execute('select `Video Location` from `Video Store` where `Video Store`.`UID` = "{}" and `Video Store`.`Video Name` = "{}"'.format(decoded.get('username'), form['video'].value))
-      rows = cursor.fetchall()
       try:
          subprocess.Popen('rm /var/www/html/videos/{}_{}'.format(decoded.get('username'), form['video'].value), shell=True)
 
