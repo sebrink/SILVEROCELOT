@@ -1,0 +1,3 @@
+To setup properly, after building with 'docker-compose build' you need to 'chown 33:33 webserver/container_files'. 
+This allows the file upload to work.
+Then you can run with 'docker-compose up'
